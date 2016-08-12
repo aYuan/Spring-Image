@@ -1,5 +1,6 @@
 package com
 
+import com.models.ImageRecord
 import com.utils.Scaler
 import org.apache.commons.io.IOUtils
 import org.junit.Before
@@ -24,15 +25,15 @@ class ScalerTest {
     fun setup() {
         val squareImageFile = File("src/test/resources/testImg.png")
         val squareInput = FileInputStream(squareImageFile)
-        val squareImage = MockMultipartFile("testImage", squareImageFile.name, "image/jpeg", IOUtils.toByteArray(squareInput))
+        val squareImage = MockMultipartFile("testImage", squareImageFile.name, "imageData/jpeg", IOUtils.toByteArray(squareInput))
 
         val longImageFile = File("src/test/resources/testImgLongWidth.png")
         val longInput = FileInputStream(longImageFile)
-        val longImage = MockMultipartFile("testImage", squareImageFile.name, "image/jpeg", IOUtils.toByteArray(longInput))
+        val longImage = MockMultipartFile("testImage", squareImageFile.name, "imageData/jpeg", IOUtils.toByteArray(longInput))
 
         val tallImageFile = File("src/test/resources/testImgLongHeight.png")
         val tallInput = FileInputStream(tallImageFile)
-        val tallImage = MockMultipartFile("testImage", squareImageFile.name, "image/jpeg", IOUtils.toByteArray(tallInput))
+        val tallImage = MockMultipartFile("testImage", squareImageFile.name, "imageData/jpeg", IOUtils.toByteArray(tallInput))
 
         this.squareScaler = Scaler(squareImage)
         this.longScaler = Scaler(longImage)
@@ -68,7 +69,7 @@ class ScalerTest {
     fun testImageScaleUpWidthProportion() {
         val scaledImage = this.squareScaler!!.ScaleImage(0, 500)
         val img = getBufferedImage(scaledImage)
-        assertEquals(500, img.width.toLong(), "Image Scaler didn't scale up width proportionately")
+        assertEquals(500, img.width.toLong(), "ImageDataField Scaler didn't scale up width proportionately")
     }
 
     @Test
@@ -100,88 +101,88 @@ class ScalerTest {
     fun testImageScaleDownWidthProportion() {
         val scaledImage = this.squareScaler!!.ScaleImage(0, 50)
         val img = getBufferedImage(scaledImage)
-        assertEquals(50, img.width.toLong(), "Image Scaler didn't scale down width proportionately")
+        assertEquals(50, img.width.toLong(), "ImageDataField Scaler didn't scale down width proportionately")
     }
 
     @Test
     fun testImageScaleUpLongSideHeight() {
         val scaledImage = this.tallScaler!!.ScaleImageLongEdge(500);
         val img = getBufferedImage(scaledImage)
-        assertEquals(500, img.height.toLong(), "Image Scaler didn't scale the height properly")
-        assertTrue(img.height.toLong() > img.width.toLong(), "Image Scaler didn't scale along the longest edge.")
+        assertEquals(500, img.height.toLong(), "ImageDataField Scaler didn't scale the height properly")
+        assertTrue(img.height.toLong() > img.width.toLong(), "ImageDataField Scaler didn't scale along the longest edge.")
     }
 
     @Test
     fun testImageScaleDownLongSideHeight() {
         val scaledImage = this.tallScaler!!.ScaleImageLongEdge(50);
         val img = getBufferedImage(scaledImage)
-        assertEquals(50, img.height.toLong(), "Image Scaler didn't scale the height properly")
-        assertTrue(img.height.toLong() > img.width.toLong(), "Image Scaler didn't scale along the longest edge")
+        assertEquals(50, img.height.toLong(), "ImageDataField Scaler didn't scale the height properly")
+        assertTrue(img.height.toLong() > img.width.toLong(), "ImageDataField Scaler didn't scale along the longest edge")
     }
 
     @Test
     fun testImageScaleUpLongSideWidth() {
         val scaledImage = this.longScaler!!.ScaleImageLongEdge(500);
         val img = getBufferedImage(scaledImage)
-        assertEquals(500, img.width.toLong(), "Image Scaler didn't scale the width properly")
-        assertTrue(img.width.toLong() > img.height.toLong(), "Image Scaler didn't scale along the longest edge")
+        assertEquals(500, img.width.toLong(), "ImageDataField Scaler didn't scale the width properly")
+        assertTrue(img.width.toLong() > img.height.toLong(), "ImageDataField Scaler didn't scale along the longest edge")
     }
 
     @Test
     fun testImageScaleDownLongSideWidth() {
         val scaledImage = this.longScaler!!.ScaleImageLongEdge(50);
         val img = getBufferedImage(scaledImage)
-        assertEquals(50, img.width.toLong(), "Image Scaler didn't scale the width properly")
-        assertTrue(img.width.toLong() > img.height.toLong(), "Image Scaler didn't scale along the longest edge")
+        assertEquals(50, img.width.toLong(), "ImageDataField Scaler didn't scale the width properly")
+        assertTrue(img.width.toLong() > img.height.toLong(), "ImageDataField Scaler didn't scale along the longest edge")
     }
 
     @Test
     fun testImageScaleUpShortSideHeight() {
         val scaledImage = this.longScaler!!.ScaleImageShortEdge(500);
         val img = getBufferedImage(scaledImage)
-        assertEquals(500, img.height.toLong(), "Image Scaler didn't scale the height properly")
-        assertTrue(img.width.toLong() > img.height.toLong(), "Image Scaler didn't scale along the shortest edge")
+        assertEquals(500, img.height.toLong(), "ImageDataField Scaler didn't scale the height properly")
+        assertTrue(img.width.toLong() > img.height.toLong(), "ImageDataField Scaler didn't scale along the shortest edge")
     }
 
     @Test
     fun testImageScaleDownShortSideHeight() {
         val scaledImage = this.longScaler!!.ScaleImageShortEdge(50);
         val img = getBufferedImage(scaledImage)
-        assertEquals(50, img.height.toLong(), "Image Scaler didn't scale the height properly")
-        assertTrue(img.width.toLong() > img.height.toLong(), "Image Scaler didn't scale along the shortest edge")
+        assertEquals(50, img.height.toLong(), "ImageDataField Scaler didn't scale the height properly")
+        assertTrue(img.width.toLong() > img.height.toLong(), "ImageDataField Scaler didn't scale along the shortest edge")
     }
 
     @Test
     fun testImageScaleUpShortSideWidth() {
         val scaledImage = this.tallScaler!!.ScaleImageShortEdge(500);
         val img = getBufferedImage(scaledImage)
-        assertEquals(500, img.width.toLong(), "Image Scaler didn't scale the height properly")
-        assertTrue(img.height.toLong() > img.width.toLong(), "Image Scaler didn't scale along the shortest edge")
+        assertEquals(500, img.width.toLong(), "ImageDataField Scaler didn't scale the height properly")
+        assertTrue(img.height.toLong() > img.width.toLong(), "ImageDataField Scaler didn't scale along the shortest edge")
     }
 
     @Test
     fun testImageScaleDownShortSideWidth() {
         val scaledImage = this.tallScaler!!.ScaleImageShortEdge(50);
         val img = getBufferedImage(scaledImage)
-        assertEquals(50, img.width.toLong(), "Image Scaler didn't scale the height properly")
-        assertTrue(img.height.toLong() > img.width.toLong(), "Image Scaler didn't scale along the shortest edge")
+        assertEquals(50, img.width.toLong(), "ImageDataField Scaler didn't scale the height properly")
+        assertTrue(img.height.toLong() > img.width.toLong(), "ImageDataField Scaler didn't scale along the shortest edge")
     }
 
     @Test
     fun testImageScaleShortEdgeSquare() {
         val scaledImage = this.squareScaler!!.ScaleImageShortEdge(50)
         val img = getBufferedImage(scaledImage)
-        assertTrue(img.height.toLong() == img.width.toLong(), "Image Scaler failed to scale a square image equally")
+        assertTrue(img.height.toLong() == img.width.toLong(), "ImageDataField Scaler failed to scale a square imageData equally")
     }
 
     @Test
     fun testImageScaleLongEdgeSquare() {
         val scaledImage = this.squareScaler!!.ScaleImageLongEdge(50)
         val img = getBufferedImage(scaledImage)
-        assertTrue(img.height.toLong() == img.width.toLong(), "Image Scaler failed to scale a square image equally")
+        assertTrue(img.height.toLong() == img.width.toLong(), "ImageDataField Scaler failed to scale a square imageData equally")
     }
 
-    private fun getBufferedImage(inputImage:ByteArray): BufferedImage {
-        return ImageIO.read(ByteArrayInputStream(inputImage))
+    private fun getBufferedImage(inputImage:ImageRecord): BufferedImage {
+        return ImageIO.read(ByteArrayInputStream(inputImage.imageBytes))
     }
 }
