@@ -9,12 +9,16 @@ import javax.imageio.ImageIO
 /**
  * Created by n0288764 on 8/11/16.
  */
-data class ImageDataField(var name: String = "", var extension: String = "", var format: FileTypes? = null, var imageData: MutableMap<String, ImageRecord> = mutableMapOf()) {
+data class ImageDataField(var name: String = "", var extension: String = "", var format: FileType? = null, var imageData: MutableMap<String, ImageRecord> = mutableMapOf()) {
 
     @JvmOverloads
-    fun addItemImage(uploadedImage: MultipartFile, size: ImageSize? = null) {
+    fun addItemImage(uploadedImage: MultipartFile, size: ImageSize? = null, saveFormat: FileType? = null) {
         if (format == null) {
             format = getFileType(uploadedImage.originalFilename)
+        }
+
+        if (saveFormat != null) {
+
         }
 
         val img: BufferedImage = ImageIO.read(ByteArrayInputStream(uploadedImage.bytes))

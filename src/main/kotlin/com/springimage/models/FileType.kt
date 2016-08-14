@@ -3,7 +3,7 @@ package com.springimage.models
 /**
  * Created by n0288764 on 8/11/16.
  */
-enum class FileTypes {
+enum class FileType {
     PNG {
         override fun extensions() = arrayOf("png")
         override fun mime() = "image/png"
@@ -33,21 +33,21 @@ enum class FileTypes {
     abstract fun mime(): String
 }
 
-fun getFileType(fileName: String): FileTypes {
-    return if (FileTypes.JPEG.extensionsContains(fileName)) {
-        FileTypes.JPEG
+fun getFileType(fileName: String): FileType {
+    return if (FileType.JPEG.extensionsContains(fileName)) {
+        FileType.JPEG
     }
-    else if (FileTypes.PNG.extensionsContains(fileName)) {
-        FileTypes.PNG
+    else if (FileType.PNG.extensionsContains(fileName)) {
+        FileType.PNG
     }
-    else if (FileTypes.TIFF.extensionsContains(fileName)) {
-        FileTypes.TIFF
+    else if (FileType.TIFF.extensionsContains(fileName)) {
+        FileType.TIFF
     }
-    else if (FileTypes.BMP.extensionsContains(fileName)) {
-        FileTypes.BMP
+    else if (FileType.BMP.extensionsContains(fileName)) {
+        FileType.BMP
     }
-    else if (FileTypes.GIF.extensionsContains(fileName)) {
-        FileTypes.GIF
+    else if (FileType.GIF.extensionsContains(fileName)) {
+        FileType.GIF
     }
     else {
         throw NotImplementedError()
