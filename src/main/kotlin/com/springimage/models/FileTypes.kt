@@ -6,23 +6,23 @@ package com.springimage.models
 enum class FileTypes {
     PNG {
         override fun extensions() = arrayOf("png")
-        override fun mime() = "imageData/png"
+        override fun mime() = "image/png"
     },
     JPEG {
         override fun extensions() = arrayOf("jpg", "jpeg", "jfif", "jfif-tbnl", "jpe")
-        override fun mime() = "imageData/jpeg"
+        override fun mime() = "image/jpeg"
     },
     TIFF {
         override fun extensions() = arrayOf("tif", "tiff")
-        override fun mime() = "imageData/tiff"
+        override fun mime() = "image/tiff"
     },
     BMP {
         override fun extensions() = arrayOf("bmp", "bm")
-        override fun mime() = "imageData/bmp"
+        override fun mime() = "image/bmp"
     },
     GIF {
         override fun extensions() = arrayOf("gif")
-        override fun mime() = "imageData/gif"
+        override fun mime() = "image/gif"
     };
 
     fun extensionsContains(fileName: String): Boolean {
