@@ -1,7 +1,7 @@
-package com.utils
+package com.springimage.utils
 
-import com.models.ImageRecord
-import com.models.ImageSize
+import com.springimage.models.ImageRecord
+import com.springimage.models.ImageSize
 import org.springframework.web.multipart.MultipartFile
 import java.awt.Image
 import java.awt.image.BufferedImage

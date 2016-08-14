@@ -3,7 +3,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com</groupId>
+    <groupId>com.springimage</groupId>
     <artifactId>spring-imageData</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.0.3</kotlin.version>
         <junit.version>4.12</junit.version>
+        <dokka.version>0.9.9</dokka.version>
     </properties>
 
     <dependencies>
@@ -93,11 +94,21 @@
                         <phase>pre-site</phase>
                         <goals>
                             <goal>dokka</goal>
+                            <goal>javadoc</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jcenter</id>
+            <name>JCenter</name>
+            <url>https://jcenter.bintray.com/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </pluginRepository>
+    </pluginRepositories>
 </project>

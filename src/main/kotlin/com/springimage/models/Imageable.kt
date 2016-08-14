@@ -1,4 +1,4 @@
-package com.models
+package com.springimage.models
 
 interface Imageable {
     fun getImage(): ImageDataField;

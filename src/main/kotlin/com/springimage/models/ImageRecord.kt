@@ -1,4 +1,4 @@
-package com.models
+package com.springimage.models
 
 /**
  * Created by n0288764 on 8/11/16.

@@ -1,7 +1,7 @@
 package com
 
-import com.models.ImageRecord
-import com.utils.Scaler
+import com.springimage.models.ImageRecord
+import com.springimage.utils.Scaler
 import org.apache.commons.io.IOUtils
 import org.junit.Before
 import org.junit.Test
