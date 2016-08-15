@@ -14,7 +14,7 @@ data class ImageDataField(var name: String = "", var extension: String = "", var
     @JvmOverloads
     fun addItemImage(uploadedImage: MultipartFile, size: ImageSize? = null, saveFormat: FileType? = null) {
         if (format == null) {
-            format = getFileType(uploadedImage.originalFilename)
+            format = getFileTypeFromExtension(uploadedImage.originalFilename)
         }
 
         if (saveFormat != null) {

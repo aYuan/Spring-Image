@@ -33,7 +33,7 @@ enum class FileType {
     abstract fun mime(): String
 }
 
-fun getFileType(fileName: String): FileType {
+fun getFileTypeFromExtension(fileName: String): FileType {
     return if (FileType.JPEG.extensionsContains(fileName)) {
         FileType.JPEG
     }
