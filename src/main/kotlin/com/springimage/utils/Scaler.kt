@@ -18,6 +18,7 @@ import javax.imageio.ImageIO
 
 class Scaler {
     private val img: BufferedImage
+
     constructor(uploadedImage: MultipartFile) {
         this.img = ImageIO.read(ByteArrayInputStream(uploadedImage.bytes))
     }
@@ -26,6 +27,10 @@ class Scaler {
     }
     constructor(image: ImageRecord) {
         this.img = ImageIO.read(ByteArrayInputStream(image.imageBytes))
+    }
+
+    fun ScaleImage(imageSize: ImageSize): ImageRecord {
+        return ScaleImage(imageSize.width, imageSize.height, this.img, imageSize)
     }
 
     /**
@@ -77,12 +82,17 @@ class Scaler {
         }
     }
 
-    private fun ScaleImage(width:Int, height:Int, img: BufferedImage):ImageRecord {
+    private fun ScaleImage(width:Int, height:Int, img: BufferedImage, imageSize: ImageSize? = null):ImageRecord {
         val scaledImage: Image = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         val imageBuff: BufferedImage = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         imageBuff.graphics.drawImage(scaledImage, 0, 0, null, null);
         val outputStream = ByteArrayOutputStream();
         ImageIO.write(imageBuff, "png", outputStream); //TODO: Support other imageData formats
-        return ImageRecord(outputStream.toByteArray(), ImageSize("${width}_${height}", width, height))
+        if (imageSize != null) {
+            return ImageRecord(outputStream.toByteArray(), imageSize)
+        }
+        else {
+            return ImageRecord(outputStream.toByteArray(), ImageSize("${width}_${height}", width, height))
+        }
     }
 }

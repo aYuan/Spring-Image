@@ -12,23 +12,24 @@ import javax.imageio.ImageIO
 data class ImageDataField(var name: String = "", var extension: String = "", var format: FileType? = null, var imageData: MutableMap<String, ImageRecord> = mutableMapOf()) {
 
     @JvmOverloads
-    fun addItemImage(uploadedImage: MultipartFile, size: ImageSize? = null, saveFormat: FileType? = null) {
+    fun addItemImage(uploadedImage: MultipartFile, size: ImageSize? = null) {
+        val img: BufferedImage = ImageIO.read(ByteArrayInputStream(uploadedImage.bytes))
+        val imgSize:ImageSize = size ?: ImageSize("original", img.width, img.height) // Create default original size if no other size is specified
         if (format == null) {
             format = getFileTypeFromExtension(uploadedImage.originalFilename)
         }
-
-        if (saveFormat != null) {
-
+        val imgRecord:ImageRecord = when {
+            size != null -> Scaler(img).ScaleImage(size)
+            else -> ImageRecord(uploadedImage.bytes, imgSize)
         }
-
-        val img: BufferedImage = ImageIO.read(ByteArrayInputStream(uploadedImage.bytes))
-        val imgSize:ImageSize = size ?: ImageSize("original", img.width, img.height) // Create default original size if no other size is specified
-
-        val imgRecord:ImageRecord = ImageRecord(uploadedImage.bytes, imgSize)
         imageData[imgSize.sizeName] = imgRecord
     }
 
-    fun addItemImage(uploadedImage: MultipartFile, sizes: List<ImageSize>) {
+    @JvmOverloads
+    fun addItemImage(uploadedImage: MultipartFile, sizes: List<ImageSize>, storeOriginal: Boolean = true) {
+        if (storeOriginal && !sizes.any({ it.sizeName == "original"})) {
+            addItemImage(uploadedImage) // Add original
+        }
         sizes.forEach { size ->
             addItemImage(uploadedImage, size)
         }
