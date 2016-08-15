@@ -3,9 +3,9 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.springimage</groupId>
+    <groupId>com.github.c1phr</groupId>
     <artifactId>spring-image</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.5</version>
     <packaging>jar</packaging>
 
     <name>spring-image</name>
