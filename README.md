@@ -11,7 +11,7 @@ A demo of the library in use can be found [here](https://github.com/c1phr/spring
 | JPEG | .jpg, .jpeg, .jfif, .jfif-tbnl, .jpe |
 | PNG | .png |
 | BMP | .bmp, .bm |
-| TiFF | .tiff, .tif |
+| TIFF | .tiff, .tif |
 | GIF | .gif |
 
 
