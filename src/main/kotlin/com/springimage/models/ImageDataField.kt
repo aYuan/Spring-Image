@@ -35,7 +35,8 @@ data class ImageDataField(var name: String = "", var extension: String = "", var
         }
     }
 
-    fun getItemImageBySize(sizeKey: String): ImageRecord? {
+    @JvmOverloads
+    fun getItemImageBySize(sizeKey: String = "original"): ImageRecord? {
         if (!imageData.containsKey(sizeKey)) {
             return null
         }
