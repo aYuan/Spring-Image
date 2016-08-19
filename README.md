@@ -39,6 +39,48 @@ Add the package to `src/main/kotlin` and include the Kotlin stdlib in your Maven
         <artifactId>kotlin-stdlib</artifactId>
         <version>1.0.3</version>
     </dependency>
+    
+You'll also need to include the following plugin to compile the Kotlin source *before* Java source.
+
+    <build>    
+        <plugins>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>1.0.3</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <sourceDir>src/main/java</sourceDir>
+                                <sourceDir>src/main/kotlin</sourceDir>
+                                <sourceDir>src/main/resources</sourceDir>
+                            </sourceDirs>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>process-test-sources</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <sourceDir>src/test/java</sourceDir>
+                                <sourceDir>src/test/kotlin</sourceDir>
+                                <sourceDir>src/test/resources</sourceDir>
+                            </sourceDirs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 ### Data Class Setup
 First add an `ImageDataField` type property on the object that you want to add an image to.
