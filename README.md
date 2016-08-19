@@ -24,7 +24,7 @@ Then just include the .jar in your Maven pom:
     <dependency>
         <groupId>com.github.c1phr</groupId>
         <artifactId>spring-image</artifactId>
-        <version>0.5</version>
+        <version>0.0.6</version>
         <scope>system</scope>
         <systemPath>${project.basedir}/lib/spring-image.jar</systemPath>
     </dependency>
