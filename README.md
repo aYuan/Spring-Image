@@ -1,4 +1,4 @@
-# Spring-Image
+# Spring-Image [![Build Status](https://travis-ci.org/c1phr/Spring-Image.svg?branch=master)](https://travis-ci.org/c1phr/Spring-Image)
 
 Spring-Image is a library built to make image upload, storage and retrieval simpler in Spring web applications.
 Uploads are made simpler by providing data types that can be used in Spring Documents to store MultipartFiles sent by the browser.
