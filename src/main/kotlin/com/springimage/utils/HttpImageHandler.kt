@@ -12,7 +12,7 @@ class HttpImageHandler {
     companion object {
 
         @JvmStatic
-        fun ImageDataField.getSize(sizeKey: String, response: HttpServletResponse) {
+        fun ImageDataField.getSize(sizeKey: String = "original", response: HttpServletResponse) {
             val responseOutputStream: ServletOutputStream = response.outputStream
             val img = this.getItemImageBySize(sizeKey)
 
