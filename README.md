@@ -98,6 +98,26 @@ Spring-Image `ImageDataField` allows you to retrieve `ImageRecord` objects for u
     ImageRecord imgLongEdge = imageDataField.getImageByLongEdge(1920);
     ImageRecord imgShortEdge = imageDataField.getImageByShortEdge(1080);
     
+### Retrieval for HTTP Calls
+The `HttpImageHandler` class provides an implementation of the retrieval methods described above that are all specifically tailored to writing images into `HttpServletResponse` objects for use in Spring applications. None of the HTTP helpers will return data, they all write image data directly into the response. Note that the `response` variable in these examples is the request's `HttpServletResponse`.
+
+The simplest method returns the "original" size key item if it's stored.
+
+    HttpImageHandler.getSize(response);
+    
+A different size key can also be passed:
+
+    HttpImageHandler.getSize("lg", response);
+    
+Getting by dimensions:
+
+    HttpImageHandler.getSize(500, 500, response);
+    
+Long and short edge:
+
+    HttpImageHandler.getSizeLongEdge(500, response);
+    HttpImageHandler.getSizeShortEdge(500, response);
+    
 ## Component Usage
 Spring-Image the following components can be used outside of the context of an `ImageDataField`.
 
