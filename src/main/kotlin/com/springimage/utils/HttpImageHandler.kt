@@ -18,7 +18,7 @@ class HttpImageHandler {
 
             if (img != null) {
                 setHeaders(response)
-                response.contentType = this.format!!.mime()
+                response.contentType = img.format.mime()
                 responseOutputStream.write(img.imageBytes)
             }
             else {
@@ -31,23 +31,23 @@ class HttpImageHandler {
 
         @JvmStatic
         fun ImageDataField.getSize(width: Int, height: Int, response: HttpServletResponse) {
-            writeResponse(this.getItemImageBySize(width, height), this.format!!.mime(), response)
+            writeResponse(this.getItemImageBySize(width, height), response)
         }
 
         @JvmStatic
         fun ImageDataField.getSizeLongEdge(longEdge: Int, response: HttpServletResponse) {
-            writeResponse(this.getItemImageBySizeLongEdge(longEdge), this.format!!.mime(), response)
+            writeResponse(this.getItemImageBySizeLongEdge(longEdge), response)
         }
 
         @JvmStatic
         fun ImageDataField.getSizeShortEdge(shortEdge: Int, response: HttpServletResponse) {
-            writeResponse(this.getItemImageBySizeShortEdge(shortEdge), this.format!!.mime(), response)
+            writeResponse(this.getItemImageBySizeShortEdge(shortEdge), response)
         }
 
-        private fun writeResponse(image: ImageRecord, mime: String, response: HttpServletResponse) {
+        private fun writeResponse(image: ImageRecord, response: HttpServletResponse) {
             val responseOutputStream: ServletOutputStream = response.outputStream
             setHeaders(response)
-            response.contentType = mime
+            response.contentType = image.format.mime()
             responseOutputStream.write(image.imageBytes)
             responseOutputStream.flush()
             responseOutputStream.close()

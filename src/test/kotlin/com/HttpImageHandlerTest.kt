@@ -14,6 +14,7 @@ import java.io.File
 import java.io.FileInputStream
 import javax.imageio.ImageIO
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 
 class HttpImageHandlerTest {
@@ -100,5 +101,10 @@ class HttpImageHandlerTest {
         val img = ImageIO.read(ByteArrayInputStream(response.contentAsByteArray))
         assertEquals(100, img.height)
         assert(img.width > 100)
+    }
+
+    @Test
+    fun testGetBase64() {
+        assertTrue(this.squareImageData.getItemImage()!!.toBase64().matches(Regex("^(([\\w+/]{4}){19}\r\n)*(([\\w+/]{4})*([\\w+/]{4}|[\\w+/]{3}=|[\\w+/]{2}==))$")))
     }
 }

@@ -1,7 +1,9 @@
 package com.springimage.utils
 
+import com.springimage.models.FileType
 import com.springimage.models.ImageRecord
 import com.springimage.models.ImageSize
+import com.springimage.models.getFileTypeFromExtension
 import org.springframework.web.multipart.MultipartFile
 import java.awt.Image
 import java.awt.image.BufferedImage
@@ -13,20 +15,27 @@ import javax.imageio.ImageIO
  * Created by n0288764 on 8/10/16.
  *
  * Contains methods for scaling images
- * @property uploadedImage original imageData that is to be resized
  */
 
 class Scaler {
     private val img: BufferedImage
+    private val format: FileType
 
     constructor(uploadedImage: MultipartFile) {
         this.img = ImageIO.read(ByteArrayInputStream(uploadedImage.bytes))
+        this.format = getFileTypeFromExtension(uploadedImage.originalFilename)
     }
-    constructor(uploadedImage: BufferedImage) {
+    constructor(uploadedImage: BufferedImage, format: FileType) {
         this.img = uploadedImage
+        this.format = format
     }
-    constructor(image: ImageRecord) {
-        this.img = ImageIO.read(ByteArrayInputStream(image.imageBytes))
+    constructor(uploadedImage: BufferedImage, name: String) {
+        this.img = uploadedImage
+        this.format = getFileTypeFromExtension(name)
+    }
+    constructor(uploadedImage: ImageRecord) {
+        this.img = ImageIO.read(ByteArrayInputStream(uploadedImage.imageBytes))
+        this.format = uploadedImage.format
     }
 
     fun ScaleImage(imageSize: ImageSize): ImageRecord {
@@ -51,7 +60,7 @@ class Scaler {
             width
         }
 
-        return ScaleImage(normalizedWidth, normalizedHeight, img);
+        return ScaleImage(normalizedWidth, normalizedHeight, img)
     }
 
     /**
@@ -61,10 +70,10 @@ class Scaler {
      */
     fun ScaleImageLongEdge(edge:Int): ImageRecord {
         if (img.height > img.width) { // Resize by height
-            return ScaleImage(height = edge);
+            return ScaleImage(height = edge)
         }
         else { // Resize by width or square imageData
-            return ScaleImage(width = edge);
+            return ScaleImage(width = edge)
         }
     }
 
@@ -75,24 +84,24 @@ class Scaler {
      */
     fun ScaleImageShortEdge(edge: Int): ImageRecord {
         if (img.height < img.width) { // Resize by height
-            return ScaleImage(height = edge);
+            return ScaleImage(height = edge)
         }
         else { // Resize by width or square imageData
-            return ScaleImage(width = edge);
+            return ScaleImage(width = edge)
         }
     }
 
     private fun ScaleImage(width:Int, height:Int, img: BufferedImage, imageSize: ImageSize? = null):ImageRecord {
-        val scaledImage: Image = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        val imageBuff: BufferedImage = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        imageBuff.graphics.drawImage(scaledImage, 0, 0, null, null);
-        val outputStream = ByteArrayOutputStream();
-        ImageIO.write(imageBuff, "png", outputStream); //TODO: Support other imageData formats
+        val scaledImage: Image = img.getScaledInstance(width, height, Image.SCALE_SMOOTH)
+        val imageBuff: BufferedImage = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
+        imageBuff.graphics.drawImage(scaledImage, 0, 0, null, null)
+        val outputStream = ByteArrayOutputStream()
+        ImageIO.write(imageBuff, "png", outputStream) //TODO: Support other imageData formats
         if (imageSize != null) {
-            return ImageRecord(outputStream.toByteArray(), imageSize)
+            return ImageRecord(outputStream.toByteArray(), imageSize, this.format)
         }
         else {
-            return ImageRecord(outputStream.toByteArray(), ImageSize("${width}_${height}", width, height))
+            return ImageRecord(outputStream.toByteArray(), ImageSize("${width}_${height}", width, height), this.format)
         }
     }
 }

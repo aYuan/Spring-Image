@@ -9,18 +9,17 @@ import javax.imageio.ImageIO
 /**
  * Created by n0288764 on 8/11/16.
  */
-data class ImageDataField(var name: String = "", var extension: String = "", var format: FileType? = null, var imageData: MutableMap<String, ImageRecord> = mutableMapOf()) {
+data class ImageDataField(var name: String = "", var extension: String = "", var imageData: MutableMap<String, ImageRecord> = mutableMapOf()) {
 
     @JvmOverloads
     fun addItemImage(uploadedImage: MultipartFile, size: ImageSize? = null) {
         val img: BufferedImage = ImageIO.read(ByteArrayInputStream(uploadedImage.bytes))
         val imgSize:ImageSize = size ?: ImageSize("original", img.width, img.height) // Create default original size if no other size is specified
-        if (format == null) {
-            format = getFileTypeFromExtension(uploadedImage.originalFilename)
-        }
+        val format = getFileTypeFromExtension(uploadedImage.originalFilename)
+
         val imgRecord:ImageRecord = when {
-            size != null -> Scaler(img).ScaleImage(size)
-            else -> ImageRecord(uploadedImage.bytes, imgSize)
+            size != null -> Scaler(img, uploadedImage.originalFilename).ScaleImage(size)
+            else -> ImageRecord(uploadedImage.bytes, imgSize, format)
         }
         imageData[imgSize.sizeName] = imgRecord
     }
@@ -32,6 +31,14 @@ data class ImageDataField(var name: String = "", var extension: String = "", var
         }
         sizes.forEach { size ->
             addItemImage(uploadedImage, size)
+        }
+    }
+
+    fun getItemImage(): ImageRecord? {
+        when {
+            imageData.containsKey("original") -> return imageData["original"]
+            !imageData.containsKey("original") && imageData.keys.size > 0 -> return LargestImage()
+            else -> return null
         }
     }
 
